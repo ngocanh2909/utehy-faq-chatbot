@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chatbot FAQ Hỗ trợ sinh viên tra cứu thông tin học tập - Đề tài 25 Khoa Sư phạm Kỹ thuật UTEHY, tích hợp dữ liệu Cổng đào tạo qldaotao.utehy.edu.vn">
+  <meta name="keywords" content="UTEHY, chatbot FAQ, quản lý đào tạo, đại học sư phạm kỹ thuật hưng yên, trí tuệ nhân tạo, lớp 130251">
+  <meta name="author" content="Nguyễn Thụy Ngọc Ánh - 13025001 - Lớp 130251 - UTEHY">
+
+  <title>Chatbot FAQ UTEHY - Tra cứu thông tin học tập & Cổng đào tạo</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       APP HEADER & NAVIGATION
+       ========================================================================= -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-section">
+        <div class="brand-logo">🎓</div>
+        <div class="brand-text">
+          <h1>UTEHY FAQ CHATBOT</h1>
+          <p>Đề tài 25 - Học phần Trí tuệ nhân tạo • Lớp 130251 • Khoa SPKT</p>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Điều hướng chính">
+        <button class="nav-btn active" data-tab="chat">
+          <span>💬</span> Hỏi Đáp AI
+        </button>
+        <button class="nav-btn" data-tab="portal">
+          <span>🌐</span> Cổng Đào Tạo UTEHY
+        </button>
+        <button class="nav-btn" data-tab="benchmark">
+          <span>📊</span> Báo Cáo & So Sánh
+        </button>
+        <button class="nav-btn" data-tab="admin">
+          <span>⚙️</span> Quản Trị FAQ
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="action-btn" title="Chuyển chế độ sáng/tối">
+          ☀️
+        </button>
+        <a href="https://qldaotao.utehy.edu.vn/" target="_blank" rel="noopener noreferrer" class="action-btn" title="Mở trang Cổng đào tạo gốc UTEHY">
+          🔗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main class="main-wrapper">
+
+    <!-- -----------------------------------------------------------------------
+         TAB 1: CHATBOT FAQ INTERFACE
+         ----------------------------------------------------------------------- -->
+    <section id="tab-chat" class="tab-pane active">
+      <div class="chat-container">
+        
+        <!-- Sidebar chọn thuật toán & câu hỏi gợi ý -->
+        <aside class="chat-sidebar">
+          <div class="sidebar-card">
+            <h3 class="sidebar-title">🤖 Chọn Mô Hình AI</h3>
+            <div class="engine-select-group">
+              <div class="engine-option" data-engine="A">
+                <div>
+                  <strong>Phương pháp A</strong>
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">Rule-based / Regex</div>
+                </div>
+                <span class="badge-tag">Top-1: 62.5%</span>
+              </div>
+
+              <div class="engine-option" data-engine="B">
+                <div>
+                  <strong>Phương pháp B</strong>
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">TF-IDF & BM25</div>
+                </div>
+                <span class="badge-tag">Top-1: 74.2%</span>
+              </div>
+
+              <div class="engine-option active" data-engine="C">
+                <div>
+                  <strong>Phương pháp C (Khuyên dùng)</strong>
+                  <div style="font-size: 0.72rem; color: #38bdf8;">Semantic Embedding</div>
+                </div>
+                <span class="badge-tag" style="background: var(--primary); color: #fff;">Top-1: 88.3%</span>
+              </div>
+
+              <div class="engine-option" data-engine="D">
+                <div>
+                  <strong>Phương pháp D</strong>
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">Phân loại ý định</div>
+                </div>
+                <span class="badge-tag">Top-1: 82.5%</span>
+              </div>
+
+              <div class="engine-option" data-engine="E">
+                <div>
+                  <strong>Phương pháp E (RAG)</strong>
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">LLM + Cổng UTEHY</div>
+                </div>
+                <span class="badge-tag">Top-1: 91.7%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Câu hỏi gợi ý nhanh -->
+          <div class="sidebar-card">
+            <h3 class="sidebar-title">💡 Câu Hỏi Mẫu Sinh Viên</h3>
+            <div class="quick-chips">
+              <button class="chip-btn" data-query="Khi nào thi kết thúc học phần môn Trí tuệ nhân tạo?">📅 Lịch thi cuối kỳ TTNT?</button>
+              <button class="chip-btn" data-query="Vắng mấy buổi thì bị cấm thi theo quy chế UTEHY?">🚫 Vắng mấy buổi bị cấm thi?</button>
+              <button class="chip-btn" data-query="Hạn nộp bài tập lớn môn TTNT là khi nào?">⏰ Deadline nộp bài tập lớn?</button>
+              <button class="chip-btn" data-query="Bị điểm F thì đăng ký học lại hay thi lại như thế nào?">🔄 Quy định học lại / học cải thiện?</button>
+              <button class="chip-btn" data-query="Thời hạn nộp học phí và cách thức chuyển khoản online?">💳 Cách nộp học phí online?</button>
+              <button class="chip-btn" data-query="Công thức tính điểm tổng kết môn học như thế nào?">📊 Trọng số tính điểm qua môn?</button>
+              <button class="chip-btn" data-query="Đợt đăng ký học lại đợt 2 học kỳ 1 năm học 2026-2027">🌐 Tìm thông báo học lại trên Cổng?</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Khung chat chính -->
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="chat-header-info">
+              <h2>Trợ Lý FAQ Lớp 130251</h2>
+              <div id="activeEngineBadge" class="active-engine-badge">
+                ⚡ Phương pháp C: Semantic Embedding (Tối ưu)
+              </div>
+            </div>
+            <button id="clearChatBtn" class="action-btn" title="Xóa đoạn chat làm mới">
+              🗑️
+            </button>
+          </div>
+
+          <!-- Vùng tin nhắn -->
+          <div id="chatMessages" class="chat-messages" aria-live="polite">
+            <!-- Tin nhắn được thêm tự động bằng Javascript -->
+          </div>
+
+          <!-- Thanh nhập câu hỏi -->
+          <div class="chat-input-bar">
+            <div class="chat-input-wrapper">
+              <input 
+                type="text" 
+                id="chatInput" 
+                class="chat-input" 
+                placeholder="Nhập câu hỏi (ví dụ: 'thi cuối kỳ khi nào', 'cấm thi', 'học lại', 'học phí')..."
+                autocomplete="off"
+              >
+              <button id="micBtn" class="mic-btn" title="Tìm kiếm bằng giọng nói tiếng Việt">
+                🎙️
+              </button>
+            </div>
+            <button id="sendMsgBtn" class="send-btn">
+              <span>Gửi</span> 🚀
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 2: CỔNG ĐÀO TẠO UTEHY (PORTAL EXPLORER)
+         ----------------------------------------------------------------------- -->
+    <section id="tab-portal" class="tab-pane">
+      <div class="portal-header">
+        <div class="portal-title-row">
+          <div>
+            <h2>Cổng Thông Tin Đào Tạo UTEHY</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Dữ liệu thu thập trực tiếp từ <code>https://qldaotao.utehy.edu.vn/</code> (Bao gồm thông báo, kế hoạch học tập, quy chế Đại học, Thạc sĩ, Tiến sĩ và văn bản biểu mẫu).
+            </p>
+          </div>
+        </div>
+
+        <div class="portal-controls">
+          <div class="search-box-wrapper">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="portalSearchInput" 
+              class="search-input" 
+              placeholder="Tìm kiếm thông báo, số quyết định, học lại, học phí, lịch học..."
+            >
+          </div>
+
+          <select id="portalCategorySelect" class="category-filter">
+            <option value="all">Tất cả chuyên mục</option>
+            <option value="Tin mới nhất">Tin mới nhất</option>
+            <option value="Thông báo">Thông báo</option>
+            <option value="Văn bản biểu mẫu">Văn bản biểu mẫu</option>
+            <option value="Quy chế Đại học">Quy chế Đại học</option>
+            <option value="Quy chế Thạc sĩ">Quy chế Thạc sĩ</option>
+            <option value="Quy chế Tiến sĩ">Quy chế Tiến sĩ</option>
+            <option value="Quy chế Văn bằng chứng chỉ">Văn bằng chứng chỉ</option>
+          </select>
+        </div>
+
+        <div id="portalStatsBar" class="portal-stats-bar">
+          <!-- Cập nhật tự động -->
+        </div>
+      </div>
+
+      <!-- Lưới bài viết thông báo -->
+      <div id="portalArticlesGrid" class="articles-grid">
+        <!-- Render tự động bằng Javascript -->
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 3: BÁO CÁO NGHIÊN CỨU & SO SÁNH 5 PHƯƠNG PHÁP
+         ----------------------------------------------------------------------- -->
+    <section id="tab-benchmark" class="tab-pane">
+      <div class="benchmark-container">
+        
+        <div class="benchmark-hero">
+          <h2>📊 Kết Quả Thực Nghiệm & So Sánh Mô Hình AI</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Trích từ <strong>Báo cáo nghiên cứu Đề tài 25</strong>: "Xây dựng Chatbot FAQ hỗ trợ sinh viên tra cứu thông tin học tập trong lớp" (Sinh viên: Nguyễn Thụy Ngọc Ánh - 13025001 - Lớp 130251).
+          </p>
+        </div>
+
+        <!-- Thống kê tổng hợp -->
+        <div class="benchmark-cards">
+          <div class="stat-card">
+            <span class="stat-value">88.3%</span>
+            <span class="stat-label">Accuracy Top-1 (Phương pháp C - Embedding)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">95.0%</span>
+            <span class="stat-label">Accuracy Top-3 (Độ chính xác Top 3 kết quả)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">&lt; 0.2s</span>
+            <span class="stat-label">Thời gian phản hồi trung bình (Tốc độ tức thì)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">4.6 / 5.0</span>
+            <span class="stat-label">Điểm đánh giá độ hài lòng sinh viên (CSAT)</span>
+          </div>
+        </div>
+
+        <!-- BẢNG 4.3: SO SÁNH ĐỊNH LƯỢNG 5 PHƯƠNG PHÁP -->
+        <div class="table-wrapper">
+          <h3 style="font-family: var(--font-heading); margin-bottom: 1rem; color: #38bdf8;">
+            Bảng 4.3. So sánh định lượng 5 phương pháp trên bộ dữ liệu kiểm thử
+          </h3>
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Chỉ số đánh giá</th>
+                <th>A. Rule-based</th>
+                <th>B. TF-IDF / BM25</th>
+                <th>C. Embedding (Sentence-BERT)</th>
+                <th>D. Phân loại ý định</th>
+                <th>E. LLM + RAG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Accuracy (Top-1)</strong></td>
+                <td>62.5%</td>
+                <td>74.2%</td>
+                <td style="color: #38bdf8; font-weight: bold;">88.3%</td>
+                <td>82.5%</td>
+                <td>91.7%</td>
+              </tr>
+              <tr>
+                <td><strong>Accuracy (Top-3)</strong></td>
+                <td>68.0%</td>
+                <td>83.3%</td>
+                <td style="color: #38bdf8; font-weight: bold;">95.0%</td>
+                <td>90.8%</td>
+                <td>97.5%</td>
+              </tr>
+              <tr>
+                <td><strong>F1-score</strong></td>
+                <td>0.63</td>
+                <td>0.75</td>
+                <td style="color: #38bdf8; font-weight: bold;">0.88</td>
+                <td>0.82</td>
+                <td>0.91</td>
+              </tr>
+              <tr>
+                <td><strong>Từ chối ngoài phạm vi (Out-of-Scope)</strong></td>
+                <td>95.0%</td>
+                <td>70.0%</td>
+                <td style="color: #38bdf8; font-weight: bold;">85.0%</td>
+                <td>80.0%</td>
+                <td>90.0%</td>
+              </tr>
+              <tr>
+                <td><strong>Thời gian phản hồi trung bình</strong></td>
+                <td>0.02 giây</td>
+                <td>0.05 giây</td>
+                <td style="color: #38bdf8; font-weight: bold;">0.18 giây</td>
+                <td>0.25 giây</td>
+                <td>1.45 giây</td>
+              </tr>
+              <tr>
+                <td><strong>Chi phí vận hành</strong></td>
+                <td>0 VNĐ</td>
+                <td>0 VNĐ</td>
+                <td style="color: #10b981; font-weight: bold;">0 VNĐ (Offline/Client)</td>
+                <td>0 VNĐ</td>
+                <td>~0.002$/câu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- BẢNG 4.4: ĐÁNH GIÁ TỔNG HỢP THEO TRỌNG SỐ -->
+        <div class="table-wrapper">
+          <h3 style="font-family: var(--font-heading); margin-bottom: 1rem; color: #38bdf8;">
+            Bảng 4.4. Đánh giá tổng hợp theo trọng số (Lý do chọn Phương pháp C)
+          </h3>
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí đánh giá</th>
+                <th>Trọng số</th>
+                <th>A. Rule-based</th>
+                <th>B. TF-IDF</th>
+                <th style="background: rgba(2, 132, 199, 0.2);">C. Embedding (Chọn)</th>
+                <th>D. Phân loại ý định</th>
+                <th>E. LLM + RAG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Độ chính xác</td>
+                <td>35%</td>
+                <td>2</td>
+                <td>3</td>
+                <td style="color: #38bdf8; font-weight: bold;">4</td>
+                <td>4</td>
+                <td>5</td>
+              </tr>
+              <tr>
+                <td>Thời gian phản hồi</td>
+                <td>20%</td>
+                <td>5</td>
+                <td>5</td>
+                <td style="color: #38bdf8; font-weight: bold;">4</td>
+                <td>4</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Chi phí vận hành</td>
+                <td>15%</td>
+                <td>5</td>
+                <td>5</td>
+                <td style="color: #38bdf8; font-weight: bold;">4</td>
+                <td>4</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Dễ bảo trì, cập nhật</td>
+                <td>15%</td>
+                <td>2</td>
+                <td>4</td>
+                <td style="color: #38bdf8; font-weight: bold;">5</td>
+                <td>3</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Độ tin cậy câu trả lời</td>
+                <td>15%</td>
+                <td>5</td>
+                <td>5</td>
+                <td style="color: #38bdf8; font-weight: bold;">5</td>
+                <td>5</td>
+                <td>3</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>TỔNG ĐIỂM (Thang 5.0)</strong></td>
+                <td><strong>100%</strong></td>
+                <td><strong>3.50</strong></td>
+                <td><strong>4.00</strong></td>
+                <td><strong>4.35 (Cao nhất 🏆)</strong></td>
+                <td><strong>3.80</strong></td>
+                <td><strong>3.55</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem;">
+            👉 <em>Kết luận nghiên cứu:</em> Phương pháp Embedding (Phương pháp C) đạt tổng điểm cao nhất (4.35/5.00), đáp ứng hoàn hảo yêu cầu tra cứu thông tin học tập của sinh viên lớp 130251 với chi phí 0 VNĐ và tốc độ cực nhanh.
+          </p>
+        </div>
+
+        <!-- BẢNG 6.1: KẾT QUẢ KHẢO SÁT NGƯỜI DÙNG THỰC TẾ -->
+        <div class="table-wrapper">
+          <h3 style="font-family: var(--font-heading); margin-bottom: 1rem; color: #38bdf8;">
+            Bảng 6.1. Kết quả khảo sát 45 sinh viên lớp 130251 (Khoa Sư phạm Kỹ thuật UTEHY)
+          </h3>
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí khảo sát</th>
+                <th>Điểm trung bình (Thang 1–5)</th>
+                <th>Nhận xét từ sinh viên</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tính dễ sử dụng</td>
+                <td><strong>4.6 / 5.0</strong></td>
+                <td>Giao diện nhắn tin quen thuộc, thao tác mượt mà trên cả điện thoại và máy tính.</td>
+              </tr>
+              <tr>
+                <td>Độ chính xác cảm nhận</td>
+                <td><strong>4.4 / 5.0</strong></td>
+                <td>Trả lời đúng hầu hết thắc mắc về lịch thi, hạn nộp BTL, điều kiện cấm thi và học phí.</td>
+              </tr>
+              <tr>
+                <td>Tốc độ phản hồi</td>
+                <td><strong>4.8 / 5.0</strong></td>
+                <td>Phản hồi gần như tức thì, không phải chờ đợi.</td>
+              </tr>
+              <tr>
+                <td>Mức độ hữu ích trong học tập</td>
+                <td><strong>4.5 / 5.0</strong></td>
+                <td>Tiết kiệm thời gian hỏi cố vấn học tập và ban cán sự lớp, chủ động tra cứu 24/7.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 4: QUẢN TRỊ FAQ & TRI THỨC (THEO YÊU CẦU CHƯƠNG 5)
+         ----------------------------------------------------------------------- -->
+    <section id="tab-admin" class="tab-pane">
+      <div class="admin-container">
+        
+        <!-- Form thêm câu hỏi mới -->
+        <div class="admin-form-card">
+          <h3>Thêm Cặp Hỏi - Đáp FAQ Mới</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">
+            Giảng viên hoặc Ban cán sự lớp có thể bổ sung câu hỏi thường gặp để cập nhật tri thức ngay lập tức cho Chatbot.
+          </p>
+
+          <div class="form-group">
+            <label for="faqQuestionInput">Câu hỏi chuẩn:</label>
+            <input type="text" id="faqQuestionInput" class="form-control" placeholder="Ví dụ: Khi nào nộp bài tập lớn?">
+          </div>
+
+          <div class="form-group">
+            <label for="faqCatInput">Chuyên mục:</label>
+            <select id="faqCatInput" class="form-control">
+              <option value="Lịch thi">Lịch thi</option>
+              <option value="Bài tập lớn & Đồ án">Bài tập lớn & Đồ án</option>
+              <option value="Quy chế & Điểm danh">Quy chế & Điểm danh</option>
+              <option value="Điểm số & Học vụ">Điểm số & Học vụ</option>
+              <option value="Học phí & Thủ tục">Học phí & Thủ tục</option>
+              <option value="Tài liệu & Công nghệ">Tài liệu & Công nghệ</option>
+              <option value="Thông tin lớp học">Thông tin lớp học</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="faqKeywordsInput">Từ khóa quan trọng (ngăn cách bằng dấu phẩy):</label>
+            <input type="text" id="faqKeywordsInput" class="form-control" placeholder="btl, deadline, bài tập lớn, nộp bài">
+          </div>
+
+          <div class="form-group">
+            <label for="faqAnswerInput">Nội dung câu trả lời:</label>
+            <textarea id="faqAnswerInput" class="form-control" placeholder="Nhập câu trả lời chính xác, rõ ràng cho sinh viên..."></textarea>
+          </div>
+
+          <button id="btnAddFaq" class="send-btn" style="width: 100%; justify-content: center;">
+            ➕ Lưu Vào Cơ Sở Tri Thức
+          </button>
+
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+            <button id="btnExportFaq" class="chip-btn" style="flex: 1; text-align: center;">
+              💾 Xuất file JSON
+            </button>
+            <button id="btnResetFaq" class="chip-btn" style="flex: 1; text-align: center; color: var(--danger);">
+              🔄 Khôi phục gốc
+            </button>
+          </div>
+        </div>
+
+        <!-- Danh sách FAQ hiện hành -->
+        <div class="admin-list-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: #38bdf8;">
+              Danh Sách Câu Hỏi Trong Kho Tri Thức
+            </h3>
+            <span class="badge-tag">Tự động cập nhật vào NLPEngine</span>
+          </div>
+
+          <div id="adminFaqListContainer" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 600px; overflow-y: auto;">
+            <!-- Render danh sách FAQ -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL CHI TIẾT BÀI VIẾT THÔNG BÁO UTEHY
+       ========================================================================= -->
+  <div id="articleModalOverlay" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalArticleTitle">Chi tiết thông báo</h3>
+        <button id="modalCloseBtn" class="modal-close-btn" aria-label="Đóng popup">&times;</button>
+      </div>
+      <div id="modalArticleBody" class="modal-body">
+        <!-- Nội dung bài viết -->
+      </div>
+      <div class="modal-footer">
+        <a id="modalArticleOriginalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary-sm" style="display: flex; align-items: center; gap: 0.4rem; color: #38bdf8; font-size: 0.85rem;">
+          🔗 Mở bài viết gốc trên qldaotao.utehy.edu.vn &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="app-footer">
+    <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+      <div>
+        <strong>Đề tài 25: Xây dựng Chatbot FAQ hỗ trợ sinh viên tra cứu thông tin học tập trong lớp</strong><br>
+        Sinh viên thực hiện: <strong>Nguyễn Thụy Ngọc Ánh</strong> (MSV: 13025001) • Lớp 130251 • Khoa Sư phạm Kỹ thuật
+      </div>
+      <div>
+        Trường Đại học Sư phạm Kỹ thuật Hưng Yên (UTEHY) • Năm học 2026 - 2027
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       SCRIPTS
+       ========================================================================= -->
+  <!-- 1. Dữ liệu Snapshot 205 bài viết từ Cổng qldaotao.utehy.edu.vn -->
+  <script src="assets/js/utehy-data.js"></script>
+  <!-- 2. Bộ dữ liệu FAQ nội bộ môn Trí tuệ nhân tạo & tiếng lóng sinh viên -->
+  <script src="assets/js/faq-data.js"></script>
+  <!-- 3. Mô hình NLP và 5 phương pháp truy xuất thông tin -->
+  <script src="assets/js/nlp-engine.js"></script>
+  <!-- 4. Điều khiển giao diện chính -->
+  <script src="assets/js/app.js"></script>
+
+</body>
+</html>
